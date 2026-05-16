@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АРАРАТ — Ресторан и Банкетный зал</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pomegranate: #8B1A1A;
+            --pomegranate-light: #C41E3A;
+            --gold: #D4A843;
+            --gold-light: #F0D68A;
+            --warm-dark: #1A1A1A;
+            --warm-brown: #3D2B1F;
+            --cream: #FDF5E6;
+            --cream-dark: #F5E6CC;
+            --text-dark: #2C2C2C;
+            --text-light: #6B6B6B;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER / NAV ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            padding: 20px 0;
+        }
+
+        header.scrolled {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 4px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 36px;
+        }
+
+        nav ul li a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold-light);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .burger span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://image.qwenlm.ai/public_source/29638bf2-121e-4f37-9d63-2957d226f777/17b5587ff-6823-4467-9e9f-75b4713e83ac.png') center/cover no-repeat;
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1.05); }
+            to { transform: scale(1.15); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(26,26,26,0.4) 0%,
+                rgba(26,26,26,0.2) 40%,
+                rgba(26,26,26,0.6) 80%,
+                rgba(26,26,26,0.95) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 8px 28px;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            animation: fadeUp 1s ease 0.3s both;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(60px, 10vw, 140px);
+            font-weight: 900;
+            letter-spacing: 12px;
+            line-height: 1;
+            margin-bottom: 24px;
+            animation: fadeUp 1s ease 0.5s both;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2.5vw, 22px);
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 50px;
+            animation: fadeUp 1s ease 0.7s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 20px;
+            animation: fadeUp 1s ease 0.9s both;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 44px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--warm-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212,168,67,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.5);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: rgba(255,255,255,0.5);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        section {
+            padding: 120px 40px;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 700;
+            color: var(--warm-dark);
+            margin-bottom: 24px;
+            line-height: 1.15;
+        }
+
+        .section-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-light);
+            max-width: 600px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 24px 0;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            background: var(--cream);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .about-image-accent {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--gold);
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--pomegranate);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        /* ===== CUISINE ===== */
+        .cuisine {
+            background: var(--warm-dark);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cuisine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(139,26,26,0.15) 100%);
+        }
+
+        .cuisine .section-label {
+            color: var(--gold-light);
+        }
+
+        .cuisine .section-title {
+            color: #fff;
+        }
+
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .cuisine-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .menu-item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .menu-item-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.5;
+        }
+
+        .menu-item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--gold);
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        /* ===== BANQUET ===== */
+        .banquet {
+            background: var(--cream);
+            position: relative;
+        }
+
+        .banquet-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .banquet-image {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .banquet-features {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .banquet-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .banquet-feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--pomegranate);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .banquet-feature-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: #fff;
+        }
+
+        .banquet-feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .banquet-feature-text {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ===== REVIEWS ===== */
+        .reviews {
+            background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .reviews-header .section-text {
+            margin: 0 auto;
+        }
+
+        .reviews-header .divider {
+            margin: 24px auto;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .review-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: -10px;
+        }
+
+        .review-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 28px;
+            font-style: italic;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pomegranate), var(--pomegranate-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .review-author-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .review-author-title {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            background: var(--warm-dark);
+            color: #fff;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contact .section-label {
+            color: var(--gold-light);
+        }
+
+        .contact .section-title {
+            color: #fff;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-item-icon {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(212,168,67,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gold);
+        }
+
+        .contact-item-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .contact-item-value {
+            font-size: 17px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .contact-item-value a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item-value a:hover {
+            color: var(--gold-light);
+        }
+
+        .contact-map {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 100%;
+            min-height: 400px;
+        }
+
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(0.6) contrast(1.1);
+        }
+
+        .contact-hours {
+            margin-top: 40px;
+            padding: 28px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hours-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 15px;
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .hours-row .day {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .hours-row .time {
+            color: var(--gold-light);
+            font-weight: 500;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #111;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 6px;
+            margin-bottom: 16px;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 1px;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .footer-socials a {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--gold);
+            background: var(--gold);
+        }
+
+        .footer-socials a:hover svg {
+            stroke: var(--warm-dark);
+        }
+
+        .footer-socials svg {
+            width: 18px;
+            height: 18px;
+            stroke: rgba(255,255,255,0.6);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26,26,26,0.98);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .cuisine-grid,
+            .banquet-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .about-image,
+            .cuisine-image,
+            .banquet-image {
+                height: 400px;
+            }
+
+            .about-image-accent {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 24px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .hero-title {
+                letter-spacing: 6px;
+            }
+
+            .hero-subtitle {
+                letter-spacing: 3px;
+                font-size: 14px;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-card {
+                padding: 30px;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+            }
+
+            .nav-container {
+                padding: 0 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">АРАРАТ</a>
+            <nav>
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#cuisine">Кухня</a></li>
+                    <li><a href="#banquet">Банкет</a></li>
+                    <li><a href="#reviews">Отзывы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="burger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" onclick="toggleMenu()">О нас</a>
+        <a href="#cuisine" onclick="toggleMenu()">Кухня</a>
+        <a href="#banquet" onclick="toggleMenu()">Банкет</a>
+        <a href="#reviews" onclick="toggleMenu()">Отзывы</a>
+        <a href="#contact" onclick="toggleMenu()">Контакты</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Ресторан &amp; Банкетный зал</div>
+            <h1 class="hero-title">АРАРАТ</h1>
+            <p class="hero-subtitle">Армянская кухня в сердце Калининграда</p>
+            <div class="hero-cta">
+                <a href="tel:+74012772122" class="btn btn-primary">Забронировать</a>
+                <a href="#cuisine" class="btn btn-outline">Наша кухня</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-image-wrapper fade-in-left">
+                    <img src="https://image.qwenlm.ai/public_source/29638bf2-121e-4f37-9d63-2957d226f777/17b5587ff-6823-4467-9e9f-75b4713e83ac.png" alt="Интерьер ресторана АРАРАТ" class="about-image">
+                    <div class="about-image-accent"></div>
+                </div>
+                <div class="fade-in-right">
+                    <div class="section-label">О ресторане</div>
+                    <h2 class="section-title">Вкус настоящей Армении</h2>
+                    <div class="divider"></div>
+                    <p class="section-text">
+                        Ресторан «АРАРАТ» — это место, где традиции армянской кухни встречаются с современным комфортом. 
+                        Мы готовим по проверенным рецептам, используя только свежие продукты и настоящие специи, 
+                        привезённые из Армении. Наш уютный интерьер и гостеприимная атмосфера сделают ваш визит незабываемым.
+                    </p>
+                    <p class="section-text" style="margin-top: 16px;">
+                        Также мы работаем на доставку, чтобы вы могли наслаждаться нашей кухней у себя дома.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">1000₽</div>
+                            <div class="stat-label">Средний счёт</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">до 00:00</div>
+                            <div class="stat-label">Время работы</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.8</div>
+                            <div class="stat-label">Рейтинг</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUISINE -->
+    <section class="cuisine" id="cuisine">
+        <div class="section-container">
+            <div class="fade-in" style="text-align:center;">
+                <div class="section-label">Наша кухня</div>
+                <h2 class="section-title">Блюда, влюбляющие с первого вкуса</h2>
+                <div class="divider" style="margin: 24px auto;"></div>
+            </div>
+            <div class="cuisine-grid">
+                <img src="https://image.qwenlm.ai/public_source/29638bf2-121e-4f37-9d63-2957d226f777/1d5526c6d-8bfc-4dfa-8acd-ebcae79b541f.png" alt="Армянские блюда" class="cuisine-image fade-in-left">
+                <div class="fade-in-right">
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">Хинкали</div>
+                                <div class="menu-item-desc">Свежайшие хинкали с сочной начинкой, приготовленные вручную</div>
+                            </div>
+                            <div class="menu-item-price">390 ₽</div>
+                        </div>
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">Хачапури по-аджарски</div>
+                                <div class="menu-item-desc">Лодочка из теста с сыром сулугуни и яйцом</div>
+                            </div>
+                            <div class="menu-item-price">450 ₽</div>
+                        </div>
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">Шашлык из баранины</div>
+                                <div class="menu-item-desc">Нежное мясо на углях с ароматными специями</div>
+                            </div>
+                            <div class="menu-item-price">590 ₽</div>
+                        </div>
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">Долма</div>
+                                <div class="menu-item-desc">Виноградные листья с начинкой из мяса и риса</div>
+                            </div>
+                            <div class="menu-item-price">420 ₽</div>
+                        </div>
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">Лаваш свежий</div>
+                                <div class="menu-item-desc">Тонкий армянский лаваш из тандыра</div>
+                            </div>
+                            <div class="menu-item-price">120 ₽</div>
+                        </div>
+                        <div class="menu-item" style="border-bottom:none;">
+                            <div>
+                                <div class="menu-item-name">Армянское вино</div>
+                                <div class="menu-item-desc">Коллекция вин из Армении — Амарант, Ани, Арени</div>
+                            </div>
+                            <div class="menu-item-price">от 650 ₽</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANQUET -->
+    <section class="banquet" id="banquet">
+        <div class="section-container">
+            <div class="banquet-content">
+                <img src="https://image.qwenlm.ai/public_source/29638bf2-121e-4f37-9d63-2957d226f777/158281f0d-0623-473f-93c1-8c7c4971a1e0.png" alt="Банкетный зал АРАРАТ" class="banquet-image fade-in-left">
+                <div class="fade-in-right">
+                    <div class="section-label">Банкетный зал</div>
+                    <h2 class="section-title">Ваш праздник в лучших традициях</h2>
+                    <div class="divider"></div>
+                    <p class="section-text">
+                        Наш банкетный зал — идеальное место для проведения торжественных мероприятий: 
+                        свадеб, юбилеев, корпоративных вечеров и семейных праздников.
+                    </p>
+                    <div class="banquet-features">
+                        <div class="banquet-feature">
+                            <div class="banquet-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="banquet-feature-title">До 80 гостей</div>
+                                <div class="banquet-feature-text">Просторный зал с элегантной обстановкой для мероприятий любого масштаба</div>
+                            </div>
+                        </div>
+                        <div class="banquet-feature">
+                            <div class="banquet-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                                    <line x1="6" y1="1" x2="6" y2="4"/>
+                                    <line x1="10" y1="1" x2="10" y2="4"/>
+                                    <line x1="14" y1="1" x2="14" y2="4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="banquet-feature-title">Индивидуальное меню</div>
+                                <div class="banquet-feature-text">Составим персональное меню с учётом ваших пожеланий и предпочтений</div>
+                            </div>
+                        </div>
+                        <div class="banquet-feature">
+                            <div class="banquet-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="banquet-feature-title">Всё включено</div>
+                                <div class="banquet-feature-text">Декор, сервировка, музыкальное сопровождение — мы позаботимся о каждой детали</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="tel:+74012772122" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Забронировать зал</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews">
+        <div class="section-container">
+            <div class="reviews-header fade-in">
+                <div class="section-label">Отзывы</div>
+                <h2 class="section-title">Что говорят наши гости</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card fade-in">
+                    <div class="review-quote">"</div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        Хорошее место, отличная кухня)) Работают и на доставку. 
+                        Заказываем регулярно — всегда свежее и вкусное. Рекомендую!
+                    </p>
+                    <div class="review-author">
+                        <div class="review-avatar">Н</div>
+                        <div>
+                            <div class="review-author-name">Наира Мартиросян</div>
+                            <div class="review-author-title">Знаток города 6 уровня</div>
+                        </div>
+                    </div>
+                    <div class="review-date" style="margin-top:12px;">25 апреля 2026</div>
+                </div>
+                <div class="review-card fade-in" style="transition-delay: 0.15s;">
+                    <div class="review-quote">"</div>
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        Захотелось хинкали, карта подсказала Арарат и не обманула! 
+                        Хинкали приготовили свежайшие и вкуснейшие, также хачапури по-аджарски приятно удивило.
+                    </p>
+                    <div class="review-author">
+                        <div class="review-avatar">А</div>
+                        <div>
+                            <div class="review-author-name">Алексей Маслов</div>
+                            <div class="review-author-title">Знаток города 7 уровня</div>
+                        </div>
+                    </div>
+                    <div class="review-date" style="margin-top:12px;">11 апреля 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="fade-in-left">
+                    <div class="section-label">Контакты</div>
+                    <h2 class="section-title">Ждём вас в гости</h2>
+                    <div class="divider"></div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-item-label">Адрес</div>
+                                <div class="contact-item-value">Типографская ул., 9<br>Калининград</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-item-label">Телефон</div>
+                                <div class="contact-item-value"><a href="tel:+74012772122">+7 (4012) 77-21-22</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="2" y1="20" x2="22" y2="20"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-item-label">Цены</div>
+                                <div class="contact-item-value">Средний счёт: 1000–1500 ₽<br><span style="color: var(--gold);">Цены: выше среднего</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-hours">
+                        <div class="hours-title">Часы работы</div>
+                        <div class="hours-row">
+                            <span class="day">Понедельник — Четверг</span>
+                            <span class="time">11:00 — 23:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Пятница — Суббота</span>
+                            <span class="time">11:00 — 00:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Воскресенье</span>
+                            <span class="time">11:00 — 23:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map fade-in-right">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2378.5!2d20.5085!3d54.7104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTTCsDQyJzM3LjQiTiAyMMKwMzAnMzAuNiJF!5e0!3m2!1sru!2sru!4v1700000000000!5m2!1sru!2sru" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">АРАРАТ</div>
+        <div class="footer-socials">
+            <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="VK">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                    <line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+            </a>
+        </div>
+        <p class="footer-text">© 2026 Ресторан АРАРАТ. Калининград. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
